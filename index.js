@@ -1,33 +1,22 @@
 const express = require('express')
-const app = express()
+const router = require('./router/user.router');
 const port = 3000
-app.set('view engine' , 'pug')
-app.set('views' , './views')
+const app = express()
+const db = require('./db')
+const bodyParser = require('body-parser')
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.set('view engine', 'pug')
+app.set('views', './views')
 app.get('/', (req, res) => {
-  res.render('index' , {
-      name : 'aaaa'
-  })
+    res.render('index', {
+        name: 'aaaa',
+        title: "hello"
+    })
 })
+app.use(express.static('public'))
+app.use('/users', router)
 
-app.get('/user', (req, res) => {
-    res.render('users/index' , {
-        users : user
-    })
-})
-var user = [
-    {id : 1 , name : 'Nguyen quang bao'},
-]
-app.get('/users/search' , (req , res) => {
-    let q = req.query.q
-
-    let matchedUsers = user.filter((user) => {
-        return user.name.toLowerCase().indexOf(q.toLowerCase()) !== -1
-    })
-    res.render('users/index' , {
-        users : matchedUsers,
-        question : q
-    })
-})
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+    console.log(`Example router listening at http://localhost:${port}`)
 })

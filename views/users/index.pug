@@ -1,7 +1,18 @@
-h1 userlist
-form(action="/users/search" , method="get")
-    input(type="text" , name="q" value=question)
-    button serach
-ul
-    each user in users
-        li= user.name
+extends ../layout/common
+block content
+    h1 userlist
+    form(action="/users/search" , method="get")
+        input(type="text" , name="q" value=question)
+        button serach
+    h1 Create User
+    form(action="/users/create" , method="post")
+        input(type="text" name="name")
+        button create
+    if users.length > 0
+        ul
+            each user in users
+                li
+                    span= user.name
+                    a(href="/users/" + user.id) View
+    else 
+        h1 nodata

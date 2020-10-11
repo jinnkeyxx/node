@@ -1,0 +1,6 @@
+extends ../layout/common
+block content
+    h1 Create User
+    form(action="/users/create" , method="post")
+        input(type="text" name="name")
+        button create
